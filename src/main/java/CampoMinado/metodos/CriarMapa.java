@@ -3,29 +3,16 @@ package CampoMinado.metodos;
 import java.awt.*;
 
 public class CriarMapa {
-//    usado para identifica numeros do campo | tamaho do  campo
-    public static boolean corDoPixel(int x, int y, Color corEsperada) {
-        try {
-            Robot robot = new Robot();
-//           cria o objeto que indica uma cor e detecta qual cor está nas cordenadas
-            Color corDetectada = robot.getPixelColor(x, y);
-//           caso é a cor esperada volta true, caso contrario false
-            return corDetectada.equals(corEsperada);
-
-        } catch (AWTException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 //    o campo sempre será um quadrado perfeito, retorna apenas a linha superior para depois ser feita ao qudrado
     public static int tamanhoCampo(){
-        Color cor = new Color(255,255,255);
+        Color cor = new Color(205, 205, 205);
         boolean y = true;
-        int tamanho = -1;
-        int x = 112;
+        int tamanho = 0;
+        int x = 114;
         while (y){
-            if (corDoPixel(x,352,cor)){
+            if (Identificar.corDoPixel(x, 373).equals(cor)) {
                 tamanho++;
+                System.out.println(tamanho);
                 x = x + 32;
             } else {
                 y = false;
@@ -35,19 +22,28 @@ public class CriarMapa {
     }
 
 //    criando um array bidemensional que cria Objetos para cada quadrado do campo, assim criando um mapa
-    public static Quadrados[][] mapa (){
+public static Quadrado[][] mapa() {
         int tamanho = tamanhoCampo();
-        int x = 112;
-        int y = 352;
-        Quadrados[][] array = new Quadrados[tamanho][tamanho];
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = new Quadrados(-1,y,x);
+    int x = 131;
+    int y = 373;
+    Quadrado[][] mapa = new Quadrado[tamanho][tamanho];
+    for (int i = 0; i < mapa.length; i++) {
+        for (int j = 0; j < mapa[i].length; j++) {
+            mapa[i][j] = new Quadrado(-1, y, x);
                 x = x + 32;
             }
             y = y + 32;
-            x = 112;
+        x = 131;
         }
-        return array;
+    return mapa;
+    }
+
+    public static void atualizarMapa(Quadrado[][] mapa) {
+        for (Quadrado[] quadrados : mapa) {
+            for (Quadrado quadrado : quadrados) {
+                quadrado.setStatus();
+                System.out.println(quadrado.toString());
+            }
+        }
     }
 }

@@ -3,19 +3,22 @@ package CampoMinado;
 
 
 import CampoMinado.metodos.CriarMapa;
-import CampoMinado.metodos.Quadrados;
-
-import java.awt.*;
+import CampoMinado.metodos.Identificar;
+import CampoMinado.metodos.Quadrado;
 
 public class main {
-    public static void main(String[] args) {
-        System.out.println(CriarMapa.tamanhoCampo());
+    public static void main(String[] args) throws InterruptedException {
+//        System.out.println(CriarMapa.tamanhoCampo());
 //       mapa com todos os quadrados -1
-        Quadrados[][] mapa = CriarMapa.mapa();
+        Quadrado[][] mapa = CriarMapa.mapa();
 
-        for (int i = 0; i < mapa.length; i++) {
-            for (int j = 0; j < mapa[i].length; j++) {
-                System.out.println(mapa[i][j].toString());
+        Identificar.clicar(mapa[8][8]);
+        Thread.sleep(1000);
+        CriarMapa.atualizarMapa(mapa);
+
+        for (Quadrado[] quadrados : mapa) {
+            for (Quadrado quadrado : quadrados) {
+                System.out.println(quadrado.toString());
             }
             System.out.println();
         }
