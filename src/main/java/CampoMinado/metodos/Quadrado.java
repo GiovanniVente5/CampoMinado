@@ -1,48 +1,51 @@
 package CampoMinado.metodos;
 
 import java.awt.*;
-import java.util.HashMap;
+
+import static CampoMinado.metodos.StatusQuadrado.*;
 
 public class Quadrado {
-//    0 - aberto
+    //     0 - aberto
 //    -1 - fechado
 //    -2 - com bandeira
 //    1 - 8 = numero de minas
-    int status;
+    int status = setStatus();
     int y;
     int x;
 
-    public void setStatus() {
+    public static int statusNum(Color cor) {
+        if (ABERTO.getCor().getRGB() == cor.getRGB()) return ABERTO.getStatus();
+        if (FECHADO.getCor().equals(cor)) return FECHADO.getStatus();
+        if (UM.getCor().equals(cor)) return UM.getStatus();
+        if (DOIS.getCor().equals(cor)) return DOIS.getStatus();
+        if (TRES.getCor().equals(cor)) return TRES.getStatus();
+        if (QUATRO.getCor().equals(cor)) return QUATRO.getStatus();
+
+        return StatusQuadrado.DESCONHECIDO.getStatus();
+    }
+
+    public int setStatus() {
+        int numIdentificado;
 //        fechado - 1 = java.awt.Color[r=255,g=255,b=255] tendo que -24 no y
 //        aberto 0 = java.awt.Color[r=189,g=189,b=189]
 //        numero 1 = java.awt.Color[r=95,g=0,b=255]
 //        numero 2 = java.awt.Color[r=37,g=133,b=0]
 //        numero 3 = java.awt.Color[r=230,g=35,b=29]
-        Color numIdentificado = Identificar.corDoPixel(x, y);
-        Color seAberto = Identificar.corDoPixel(x, y - 24);
-
-        HashMap<Color, Integer> colorHashMap = new HashMap<>();
-        colorHashMap.put(new Color(189, 189, 189), 0);
-        colorHashMap.put(new Color(95, 0, 255), 1);
-        colorHashMap.put(new Color(37, 133, 0), 2);
-        colorHashMap.put(new Color(230, 35, 29), 3);
-
-        if (seAberto.equals(new Color(255, 255, 255))) {
-            status = -1;
-            System.out.println("Fechado");
-        } else if (colorHashMap.containsKey(numIdentificado)) {
-            status = colorHashMap.get(numIdentificado);
-            System.out.println("Identificado: " + status);
+//        numero 4 = java.awt.Color[r=42,g=0,b=125]
+        if (Comando.corDoPixel(x, y - 20).equals(FECHADO.getCor())) {
+            numIdentificado = -1;
         } else {
-            System.out.println(numIdentificado);
-            status = 9;
+            numIdentificado = statusNum(Comando.corDoPixel(x, y));
         }
+        this.status = numIdentificado;
+        return numIdentificado;
     }
+
 
     @Override
     public String toString() {
         return "Quadrado{" +
-               "status=" + status +
+               "statusNum=" + status +
                ", x=" + x +
                ", y=" + y +
                '}';
