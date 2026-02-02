@@ -4,6 +4,7 @@ import java.awt.*;
 
 public enum StatusQuadrado {
     DESCONHECIDO(404, new Color(255, 0, 0)),
+    BANDEIRA(-2, new Color(0, 0, 0)),
     FECHADO(-1, new Color(205, 205, 205)),
     ABERTO(0, new Color(189, 189, 189)),
     UM(1, new Color(95, 0, 255)),

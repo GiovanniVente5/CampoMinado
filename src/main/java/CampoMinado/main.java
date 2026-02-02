@@ -1,25 +1,30 @@
 package CampoMinado;
 
 
-import CampoMinado.metodos.CriarMapa;
 import CampoMinado.metodos.Comando;
+import CampoMinado.metodos.CompletandoMapa;
 import CampoMinado.metodos.Quadrado;
+import CampoMinado.metodos.StatusQuadrado;
 
-import java.awt.*;
-
-import static CampoMinado.metodos.CompletandoMapa.randomQuadrado;
+import static CampoMinado.metodos.Comando.*;
+import static CampoMinado.metodos.CriarMapa.*;
 
 public class main {
     public static void main(String[] args) throws InterruptedException {
-//       System.out.println(CriarMapa.tamanhoCampo());
-//       mapa com todos os quadrados -1
-        Quadrado[][] mapa = CriarMapa.mapa();
-        Comando.clicar(mapa[0][0]);
-        CriarMapa.aoRedor(mapa, CriarMapa.coordenada(mapa, 1));
+        Quadrado[][] mapa = mapa();
 
-//      [0][0],[0][1],[0][2]
-//      [1][0],[1][1],[1][2]
-//      [2][0],[2][1],[2][2]
+        clicar(mapa[2][3]);
+        atualizarMapa(mapa);
+        int[] a = coordenada(mapa, StatusQuadrado.UM);
+        CompletandoMapa.chanceBombas(mapa, mapa[a[0]][a[1]]);
 
+
+        for (Quadrado[] quadrados : mapa) {
+            System.out.println("--------------------------------------");
+            for (Quadrado quadrado : quadrados) {
+                if (quadrado.getChanceBomba() != 0) Comando.bandeira(quadrado);
+                System.out.println(quadrado.toString());
+            }
+        }
     }
 }

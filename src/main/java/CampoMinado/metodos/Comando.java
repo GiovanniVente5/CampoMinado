@@ -23,21 +23,18 @@ public class Comando {
     public static void clicar(Quadrado quadrado) {
         try {
             Robot robot = new Robot();
-            robot.delay(50);
             robot.mouseMove(quadrado.x, quadrado.y);
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.delay(50);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-            robot.delay(1000);
-
-            System.out.println("Click - " + quadrado.toString());
-
+            robot.delay(2000);
+            System.out.println("Click");
         } catch (AWTException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void marcar(Quadrado quadrado) {
+    public static void bandeira(Quadrado quadrado) {
         try {
             Robot robot = new Robot();
             robot.delay(50);
@@ -46,7 +43,7 @@ public class Comando {
             robot.delay(50);
             robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
             Thread.sleep(500);
-            System.out.println("Click - " + quadrado.toString());
+            System.out.println("Colocou bandeira");
 
         } catch (AWTException | InterruptedException e) {
             throw new RuntimeException(e);

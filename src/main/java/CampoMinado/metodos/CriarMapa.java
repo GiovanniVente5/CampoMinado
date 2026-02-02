@@ -39,10 +39,12 @@ public class CriarMapa {
         int[] tamanho = tamanhoCampo();
         int x = 131;
         int y = 377;
+
         Quadrado[][] mapa = new Quadrado[tamanho[0]][tamanho[1]];
+
         for (int i = 0; i < mapa.length; i++) {
             for (int j = 0; j < mapa[i].length; j++) {
-                mapa[i][j] = new Quadrado(-1, y, x);
+                mapa[i][j] = new Quadrado(StatusQuadrado.FECHADO, y, x, new int[]{i, j});
                 x += 32;
             }
             y += 32;
@@ -59,26 +61,16 @@ public class CriarMapa {
         }
     }
 
-    public static int[] coordenada(Quadrado[][] mapa, int statusQuadrado) {
+    public static int[] coordenada(Quadrado[][] mapa, StatusQuadrado statusQuadrado) {
         for (int i = 0; i < mapa.length; i++) {
             for (int j = 0; j < mapa[i].length; j++) {
-                if (mapa[i][j].status == statusQuadrado) {
+                if (mapa[i][j].getStatusQuadrado() == statusQuadrado) {
+                    System.out.println("Retornou coordenadas: " + i + j);
                     return new int[]{i, j};
                 }
             }
         }
+        System.out.println("Sem coordenadas");
         return new int[]{0};
-    }
-
-    public static void aoRedor(Quadrado[][] mapa, int[] coordenada) {
-        for (int i = coordenada[0] - 1; i < coordenada[0] + 1; i++) {
-            for (int j = coordenada[1] - 1; j < coordenada[1] + 1; j++) {
-                if (mapa[i][j].equals(mapa[coordenada[0]][coordenada[1]])) {
-                } else {
-                    Comando.clicar(mapa[i][j]);
-                }
-            }
-        }
-        atualizarMapa(mapa);
     }
 }

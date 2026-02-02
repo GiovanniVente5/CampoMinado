@@ -5,76 +5,66 @@ import java.awt.*;
 import static CampoMinado.metodos.StatusQuadrado.*;
 
 public class Quadrado {
-    //     0 - aberto
-//    -1 - fechado
-//    -2 - com bandeira
-//    1 - 8 = numero de minas
-    int status = setStatus();
     int y;
     int x;
+    int[] coordenada;
+    int chanceBomba = 0;
+    StatusQuadrado statusQuadrado;
 
-    public static int statusNum(Color cor) {
-        if (ABERTO.getCor().getRGB() == cor.getRGB()) return ABERTO.getStatus();
-        if (FECHADO.getCor().equals(cor)) return FECHADO.getStatus();
-        if (UM.getCor().equals(cor)) return UM.getStatus();
-        if (DOIS.getCor().equals(cor)) return DOIS.getStatus();
-        if (TRES.getCor().equals(cor)) return TRES.getStatus();
-        if (QUATRO.getCor().equals(cor)) return QUATRO.getStatus();
+    public static StatusQuadrado statusNum(Color cor) {
+        if (BANDEIRA.getCor().getRGB() == cor.getRGB()) return BANDEIRA;
+        if (ABERTO.getCor().getRGB() == cor.getRGB()) return ABERTO;
+        if (FECHADO.getCor().getRGB() == cor.getRGB()) return FECHADO;
+        if (UM.getCor().getRGB() == cor.getRGB()) return UM;
+        if (DOIS.getCor().getRGB() == cor.getRGB()) return DOIS;
+        if (TRES.getCor().getRGB() == cor.getRGB()) return TRES;
+        if (QUATRO.getCor().getRGB() == cor.getRGB()) return QUATRO;
 
-        return StatusQuadrado.DESCONHECIDO.getStatus();
+        return StatusQuadrado.DESCONHECIDO;
     }
 
-    public int setStatus() {
-        int numIdentificado;
-//        fechado - 1 = java.awt.Color[r=255,g=255,b=255] tendo que -24 no y
-//        aberto 0 = java.awt.Color[r=189,g=189,b=189]
-//        numero 1 = java.awt.Color[r=95,g=0,b=255]
-//        numero 2 = java.awt.Color[r=37,g=133,b=0]
-//        numero 3 = java.awt.Color[r=230,g=35,b=29]
-//        numero 4 = java.awt.Color[r=42,g=0,b=125]
-        if (Comando.corDoPixel(x, y - 20).equals(FECHADO.getCor())) {
-            numIdentificado = -1;
+    public void setStatus() {
+        if (Comando.corDoPixel(x, y - 20).getRGB() == new Color(205, 205, 205).getRGB()) {
+            this.statusQuadrado = FECHADO;
         } else {
-            numIdentificado = statusNum(Comando.corDoPixel(x, y));
+            this.statusQuadrado = statusNum(Comando.corDoPixel(x, y));
         }
-        this.status = numIdentificado;
-        return numIdentificado;
     }
-
 
     @Override
     public String toString() {
         return "Quadrado{" +
-               "statusNum=" + status +
+               "y=" + y +
                ", x=" + x +
-               ", y=" + y +
+               ", chanceBomba=" + chanceBomba +
+               ", statusQuadrado=" + statusQuadrado +
                '}';
     }
 
-    public Quadrado(int status, int y, int x) {
-        this.status = status;
+    public StatusQuadrado getStatusQuadrado() {
+        return statusQuadrado;
+    }
+
+    public int[] getCoordenada() {
+        return coordenada;
+    }
+
+    public int getChanceBomba() {
+        return chanceBomba;
+    }
+
+    public Quadrado(StatusQuadrado statusQuadrado, int y, int x, int[] coordenada) {
+        this.statusQuadrado = statusQuadrado;
         this.y = y;
         this.x = x;
+        this.coordenada = coordenada;
     }
-
-    public int getStatus() {
-        return status;
-    }
-
 
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
-
     public int getX() {
         return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
     }
 }
