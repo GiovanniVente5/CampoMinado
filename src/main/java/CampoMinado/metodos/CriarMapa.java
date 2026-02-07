@@ -48,7 +48,25 @@ public class CriarMapa {
                 x += 32;
             }
             y += 32;
-        x = 131;
+            x = 131;
+        }
+        return mapa;
+    }
+
+    //    DELETAR ISSO DPS
+    public static Quadrado[][] mapaTESTE() {
+        int x = 0;
+        int y = 0;
+
+        Quadrado[][] mapa = new Quadrado[3][3];
+
+        for (int i = 0; i < mapa.length; i++) {
+            for (int j = 0; j < mapa[i].length; j++) {
+                mapa[i][j] = new Quadrado(StatusQuadrado.FECHADO, y, x, new int[]{i, j});
+                x++;
+            }
+            y++;
+            x = 0;
         }
         return mapa;
     }

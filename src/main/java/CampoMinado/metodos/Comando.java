@@ -23,7 +23,7 @@ public class Comando {
     public static void clicar(Quadrado quadrado) {
         try {
             Robot robot = new Robot();
-            robot.mouseMove(quadrado.x, quadrado.y);
+            robot.mouseMove(quadrado.getX(), quadrado.getY());
             robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
             robot.delay(50);
             robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
@@ -38,7 +38,7 @@ public class Comando {
         try {
             Robot robot = new Robot();
             robot.delay(50);
-            robot.mouseMove(quadrado.x, quadrado.y);
+            robot.mouseMove(quadrado.getX(), quadrado.getY());
             robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
             robot.delay(50);
             robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);

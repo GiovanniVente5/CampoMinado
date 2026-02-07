@@ -5,11 +5,11 @@ import java.awt.*;
 import static CampoMinado.metodos.StatusQuadrado.*;
 
 public class Quadrado {
-    int y;
-    int x;
-    int[] coordenada;
-    int chanceBomba = 0;
-    StatusQuadrado statusQuadrado;
+    private int y;
+    private int x;
+    private int[] coordenada;
+    private int chanceBomba = 0;
+    private StatusQuadrado statusQuadrado;
 
     public static StatusQuadrado statusNum(Color cor) {
         if (BANDEIRA.getCor().getRGB() == cor.getRGB()) return BANDEIRA;
@@ -45,6 +45,13 @@ public class Quadrado {
         return statusQuadrado;
     }
 
+    public Quadrado(StatusQuadrado statusQuadrado, int y, int x, int[] coordenada) {
+        this.statusQuadrado = statusQuadrado;
+        this.y = y;
+        this.x = x;
+        this.coordenada = coordenada;
+    }
+
     public int[] getCoordenada() {
         return coordenada;
     }
@@ -53,18 +60,24 @@ public class Quadrado {
         return chanceBomba;
     }
 
-    public Quadrado(StatusQuadrado statusQuadrado, int y, int x, int[] coordenada) {
-        this.statusQuadrado = statusQuadrado;
-        this.y = y;
-        this.x = x;
-        this.coordenada = coordenada;
-    }
-
     public int getY() {
         return y;
     }
 
     public int getX() {
         return x;
+    }
+
+    public void setStatusQuadrado(StatusQuadrado statusQuadrado) {
+        this.statusQuadrado = statusQuadrado;
+    }
+
+    public void setChanceBomba() {
+        if (this.statusQuadrado == FECHADO) {
+            this.chanceBomba++;
+        } else {
+            this.chanceBomba = 0;
+        }
+
     }
 }
