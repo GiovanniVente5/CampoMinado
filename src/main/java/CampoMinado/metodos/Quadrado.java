@@ -5,11 +5,18 @@ import java.awt.*;
 import static CampoMinado.metodos.StatusQuadrado.*;
 
 public class Quadrado {
-    private int y;
-    private int x;
-    private int[] coordenada;
+    final int y;
+    final int x;
+    final int[] coordenada;
     private int chanceBomba = 0;
     private StatusQuadrado statusQuadrado;
+
+    public Quadrado(StatusQuadrado statusQuadrado, int y, int x, int[] coordenada) {
+        this.statusQuadrado = statusQuadrado;
+        this.y = y;
+        this.x = x;
+        this.coordenada = coordenada;
+    }
 
     public static StatusQuadrado statusNum(Color cor) {
         if (BANDEIRA.getCor().getRGB() == cor.getRGB()) return BANDEIRA;
@@ -28,6 +35,7 @@ public class Quadrado {
             this.statusQuadrado = FECHADO;
         } else {
             this.statusQuadrado = statusNum(Comando.corDoPixel(x, y));
+            setChanceBomba(0);
         }
     }
 
@@ -45,11 +53,8 @@ public class Quadrado {
         return statusQuadrado;
     }
 
-    public Quadrado(StatusQuadrado statusQuadrado, int y, int x, int[] coordenada) {
+    public void setStatusQuadrado(StatusQuadrado statusQuadrado) {
         this.statusQuadrado = statusQuadrado;
-        this.y = y;
-        this.x = x;
-        this.coordenada = coordenada;
     }
 
     public int[] getCoordenada() {
@@ -68,13 +73,9 @@ public class Quadrado {
         return x;
     }
 
-    public void setStatusQuadrado(StatusQuadrado statusQuadrado) {
-        this.statusQuadrado = statusQuadrado;
-    }
-
-    public void setChanceBomba() {
+    public void setChanceBomba(int chanceBomba) {
         if (this.statusQuadrado == FECHADO) {
-            this.chanceBomba++;
+            this.chanceBomba = chanceBomba;
         } else {
             this.chanceBomba = 0;
         }
