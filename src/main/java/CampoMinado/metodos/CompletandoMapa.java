@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class CompletandoMapa {
     public static boolean jogoStatus() {
@@ -34,12 +33,15 @@ public class CompletandoMapa {
             for (Quadrado quadrado : quadrados) {
                 if (quadrado.getStatusQuadrado() != StatusQuadrado.FECHADO && quadrado.getStatusQuadrado() != StatusQuadrado.ABERTO && quadrado.getStatusQuadrado() != StatusQuadrado.BANDEIRA) {
                     List<Quadrado> list = aoRedor(mapa, quadrado);
+
                     list.removeIf(quadrado1 -> quadrado1.getStatusQuadrado() != StatusQuadrado.FECHADO);
+
                     AtomicInteger bandeiras = new AtomicInteger();
 
                     list.forEach(quadrado1 -> {
                         if (quadrado1.getStatusQuadrado() == StatusQuadrado.BANDEIRA) bandeiras.getAndIncrement();
                     });
+
                     list.forEach(quadrado1 -> quadrado1.setChanceBomba(quadrado.getStatusQuadrado().getStatus() + quadrado1.getChanceBomba() - bandeiras.get()));
                 }
             }
@@ -48,8 +50,25 @@ public class CompletandoMapa {
 
     public static void bandeiras(Quadrado[][] mapa) {
         List<Quadrado> quadradosBomba = new ArrayList<>(Arrays.stream(mapa).flatMap(Arrays::stream).toList());
-        quadradosBomba.removeIf(quadrado -> quadrado.getChanceBomba() == 0);
-        quadradosBomba.sort(Comparator.comparing(Quadrado::getChanceBomba));
-        quadradosBomba.forEach(quadrado -> System.out.println(quadrado.toString()));
+        quadradosBomba.removeIf(quadrado -> quadrado.getChanceBomba() <= 4);
+        quadradosBomba.sort(Comparator.comparing(Quadrado::getChanceBomba).reversed());
+        quadradosBomba.forEach(Comando::bandeira);
+    }
+
+    public static void clicar(Quadrado[][] mapa) {
+        for (Quadrado[] quadrados : mapa) {
+            for (Quadrado quadrado : quadrados) {
+                if (quadrado.getStatusQuadrado() != StatusQuadrado.FECHADO && quadrado.getStatusQuadrado() != StatusQuadrado.ABERTO && quadrado.getStatusQuadrado() != StatusQuadrado.BANDEIRA) {
+                    List<Quadrado> list = aoRedor(mapa, quadrado);
+                    list.sort(Comparator.comparing(Quadrado::getChanceBomba).reversed());
+                    AtomicInteger a = new AtomicInteger(0);
+                    list.forEach(quadrado1 -> {
+                        if (quadrado1.getStatusQuadrado() == StatusQuadrado.FECHADO) a.getAndIncrement();
+                    });
+
+                    if (a.get() == 1) Comando.clicar(list.getFirst());
+                }
+            }
+        }
     }
 }

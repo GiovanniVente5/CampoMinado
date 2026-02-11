@@ -9,10 +9,9 @@ public class Comando {
         try {
             Robot robot = new Robot();
 //           cria o objeto que indica uma cor e detecta qual cor está nas cordenadas
-            Color corDetectada = robot.getPixelColor(x, y);
-//            System.out.println(corDetectada);
+            //            System.out.println(corDetectada);
 //           caso é a cor esperada volta true, caso contrario false
-            return corDetectada;
+            return robot.getPixelColor(x, y);
 
         } catch (AWTException e) {
             throw new RuntimeException(e);
@@ -43,6 +42,7 @@ public class Comando {
             robot.delay(50);
             robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
             Thread.sleep(500);
+            quadrado.setStatusQuadrado(StatusQuadrado.BANDEIRA);
             System.out.println("Colocou bandeira");
 
         } catch (AWTException | InterruptedException e) {

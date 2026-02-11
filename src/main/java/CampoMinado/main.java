@@ -19,6 +19,9 @@ public class main {
 //        mapa[0][0].setStatusQuadrado(StatusQuadrado.UM);
         CompletandoMapa.chanceBombas(mapa);
         CompletandoMapa.bandeiras(mapa);
+        atualizarMapa(mapa);
+
+
 
 
         for (Quadrado[] quadrados : mapa) {
